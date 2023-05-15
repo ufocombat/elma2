@@ -1,0 +1,16 @@
+C:\Users\ufocombat\source\repos\elma2\elma2\bin\Debug\elma2.exe.config
+C:\Users\ufocombat\source\repos\elma2\elma2\bin\Debug\elma2.exe
+C:\Users\ufocombat\source\repos\elma2\elma2\bin\Debug\elma2.pdb
+C:\Users\ufocombat\source\repos\elma2\elma2\obj\Debug\elma2.csproj.AssemblyReference.cache
+C:\Users\ufocombat\source\repos\elma2\elma2\obj\Debug\elma2.csproj.SuggestedBindingRedirects.cache
+C:\Users\ufocombat\source\repos\elma2\elma2\obj\Debug\elma2.Properties.Resources.resources
+C:\Users\ufocombat\source\repos\elma2\elma2\obj\Debug\elma2.csproj.GenerateResource.cache
+C:\Users\ufocombat\source\repos\elma2\elma2\obj\Debug\elma2.csproj.CoreCompileInputs.cache
+C:\Users\ufocombat\source\repos\elma2\elma2\obj\Debug\elma2.exe
+C:\Users\ufocombat\source\repos\elma2\elma2\obj\Debug\elma2.pdb
+C:\Users\ufocombat\source\repos\elma2\elma2\obj\Debug\elma2.Form1.resources
+C:\Users\ufocombat\source\repos\elma2\elma2\bin\Debug\MySql.Data.dll
+C:\Users\ufocombat\source\repos\elma2\elma2\bin\Debug\ZstdNet.dll
+C:\Users\ufocombat\source\repos\elma2\elma2\bin\Debug\System.Buffers.dll
+C:\Users\ufocombat\source\repos\elma2\elma2\bin\Debug\MySql.Data.xml
+C:\Users\ufocombat\source\repos\elma2\elma2\obj\Debug\elma2.csproj.CopyComplete
