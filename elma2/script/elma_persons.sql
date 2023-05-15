@@ -18,29 +18,32 @@ USE `elma`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `enterlog`
+-- Table structure for table `persons`
 --
 
-DROP TABLE IF EXISTS `enterlog`;
+DROP TABLE IF EXISTS `persons`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `enterlog` (
-  `id` int NOT NULL,
-  `enterDate` varchar(45) NOT NULL DEFAULT 'now()',
-  `userLogin` varchar(50) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `fk_users_idx` (`userLogin`),
-  CONSTRAINT `fk_users` FOREIGN KEY (`userLogin`) REFERENCES `users` (`login`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+CREATE TABLE `persons` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `personEmail` varchar(50) DEFAULT NULL,
+  `personName` varchar(50) DEFAULT NULL,
+  `personBirthDate` date NOT NULL,
+  `personPassportNo` varchar(6) DEFAULT NULL,
+  `personPassportSeria` varchar(4) DEFAULT NULL,
+  `personPhone` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `enterlog`
+-- Dumping data for table `persons`
 --
 
-LOCK TABLES `enterlog` WRITE;
-/*!40000 ALTER TABLE `enterlog` DISABLE KEYS */;
-/*!40000 ALTER TABLE `enterlog` ENABLE KEYS */;
+LOCK TABLES `persons` WRITE;
+/*!40000 ALTER TABLE `persons` DISABLE KEYS */;
+INSERT INTO `persons` VALUES (1,'x@x.ru','Сесменов','2001-01-02','101010','1100','123'),(3,'y@y.ru','Петров','2001-01-02','101011','1111','321');
+/*!40000 ALTER TABLE `persons` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -52,4 +55,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-05-15 23:16:48
+-- Dump completed on 2023-05-15 23:16:49

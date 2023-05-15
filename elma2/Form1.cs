@@ -96,5 +96,26 @@ namespace elma2
             labelSosudStatus.Visible = true;
 
         }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void comboBox1_SelectedValueChanged(object sender, EventArgs e)
+        {
+            if (comboBox1.Text== "Юрлицо")
+            {
+                comboBox2.DataSource = MyDb.getCustomers();
+                comboBox2.DisplayMember = "name";
+            }
+            else
+            {
+                comboBox2.DataSource = MyDb.getPersons();
+                comboBox2.DisplayMember = "personName";
+            }
+
+            comboBox2.ValueMember = "id";
+        }
     }
 }

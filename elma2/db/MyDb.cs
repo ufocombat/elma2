@@ -53,7 +53,16 @@ namespace elma2
             return dataTable;
         }
 
-        //Работа с валютами
+        public static DataTable getCustomers()
+        {
+            return getSelectTable($"SELECT * FROM customers");
+        }
+
+        public static DataTable getPersons()
+        {
+            return getSelectTable($"SELECT * FROM persons");
+        }
+
 
         public static DataTable getOrders()
         {
