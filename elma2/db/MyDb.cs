@@ -1,5 +1,4 @@
 ﻿using MySql.Data.MySqlClient;
-using Mysqlx.Crud;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -84,6 +83,17 @@ namespace elma2
             return getSelectTable($"SELECT * FROM services");
         }
 
+        public static DataTable getServiceStutuses()
+        {
+            return getSelectTable($"SELECT * FROM servicestatuses");
+        }
+
+        public static DataTable getOrderStutuses()
+        {
+            return getSelectTable($"SELECT * FROM orderstatuses");
+        }
+
+
         public static Int32 getNextSosudNo()
         {
             DataTable result = getSelectTable($"SELECT max(sosudNo) FROM elma.orders");
@@ -145,12 +155,12 @@ namespace elma2
         //    con.Close();
         //}
 
-        ////Работа с пользователями
+        //Работа с пользователями
 
-        //public static DataTable getUsers()
-        //{
-        //    return getSelectTable($"SELECT * FROM users order by name");
-        //}
+        public static DataTable getUsers()
+        {
+            return getSelectTable($"SELECT * FROM users order by name");
+        }
 
         //public static DataTable getUsers(String login, String password)
         //{
@@ -323,29 +333,38 @@ namespace elma2
         //    con.Close();
         //}
 
-        //public static void updateOrder(Order order)
-        //{
-        //    MySqlConnection con = getSqlConnection();
-        //    MySqlCommand com = con.CreateCommand();
+        public static void updateOrder(Order order, DataGridViewRowCollection details)
+        {
+            MySqlConnection con = getSqlConnection();
+            MySqlCommand com = con.CreateCommand();
 
-        //    com.CommandText = $"update orders set serviceId=@serviceId, userLogin=@userLogin, discountPercent=@discountPercent, status=@status where id={order.id}";
+            com.CommandText = $"update orders set  status=@status, description=@description, sosudNo=@sosudNo  where id={order.id}";
 
-        //    com.Parameters.AddWithValue("@serviceId", order.serviceId);
-        //    com.Parameters.AddWithValue("@userLogin", order.userLogin);
-        //    com.Parameters.AddWithValue("@discountPercent", order.discountPercent);
-        //    com.Parameters.AddWithValue("@status", order.status);
+            com.Parameters.AddWithValue("@status", order.status);
+            com.Parameters.AddWithValue("@description", order.description);
+            com.Parameters.AddWithValue("@sosudNo", order.sosudNo);
 
-        //    try
-        //    {
-        //        com.ExecuteNonQuery();
-        //    }
-        //    catch (Exception error)
-        //    {
-        //        MessageBox.Show($"Ошибка сохранения заказа: {error.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        //    }
+            try
+            {
+                com.ExecuteNonQuery();
+            }
+            catch (Exception error)
+            {
+                MessageBox.Show($"Ошибка сохранения заказа: {error.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
 
-        //    con.Close();
-        //}
+            foreach (DataGridViewRow row in details)
+            {
+                MySqlCommand det = con.CreateCommand();
+                det.CommandText = $"update orderdetail set  serviceStatus=@serviceStatus, userLogin=@userLogin where orderId={row.Cells[0].Value} and lineNo={row.Cells["lineNo"].Value}";
+                det.Parameters.AddWithValue("@serviceStatus", row.Cells["serviceStatus"].Value);
+                det.Parameters.AddWithValue("@userLogin", row.Cells["userLogin"].Value);
+
+                det.ExecuteNonQuery();
+            }
+
+            con.Close();
+        }
 
         //public static void archOrderById(Int32 orderId)
         //{

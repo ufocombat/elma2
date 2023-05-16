@@ -21,28 +21,51 @@ namespace elma2
 
         private void GetOrder(Int32 id)
         {
-
             var order = MyDb.getOrder(id);
 
             idBox.Text = Convert.ToString(order.Rows[0]["id"]);
             dateBox.Text = Convert.ToString(order.Rows[0]["orderDate"]);
-            statusBox.Text = (String)order.Rows[0]["status"];
+            comboOrderStatusBox.Text = (String)order.Rows[0]["status"];
             descriptionBox.Text = (String)order.Rows[0]["description"];
+            sosudBox.Text = order.Rows[0]["sosudNo"].ToString();
+            comboBox1.SelectedText = (String)order.Rows[0]["clientType"];
 
             dataGridView1.DataSource = MyDb.getOrderDetail(id);
+            dataGridView1.CellEndEdit+= dataGridView1_CellEndEdit;
+
+        }
+
+        private void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            Text = "++";
+            dataGridView1.EndEdit();
+            //tAB1TableAdapter.Update(dataSet1);
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            GetOrder(id);
-
             serviceBox.DataSource = MyDb.getServices();
-        }
 
-        private void button4_Click(object sender, EventArgs e)
-        {
-            MyDb.addServiceToOrder(id, (Int32)serviceBox.SelectedValue);
-            dataGridView1.DataSource = MyDb.getOrderDetail(id);
+            comboOrderStatusBox.DisplayMember = "description";
+            comboOrderStatusBox.ValueMember = "status";
+            comboOrderStatusBox.DataSource = MyDb.getOrderStutuses();
+
+            GetOrder(id);
+            
+            var combo = (DataGridViewComboBoxColumn)dataGridView1.Columns["serviceStatus"];
+
+            combo.DisplayMember = "description";
+            combo.DataPropertyName = "serviceStatus";
+            combo.ValueMember = "status";
+            combo.DataSource = MyDb.getServiceStutuses();
+
+            var combou = (DataGridViewComboBoxColumn)dataGridView1.Columns["userLogin"];
+
+            combou.DisplayMember = "name";
+            combou.DataPropertyName = "userLogin";
+            combou.ValueMember = "login";
+            combou.DataSource = MyDb.getUsers();
+
         }
 
         private void button3_Click_1(object sender, EventArgs e)
@@ -54,21 +77,6 @@ namespace elma2
         {
             GetOrder(--id);
         }
-
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            sosudBox.Text = MyDb.getNextSosudNo().ToString();
-            labelSosudStatus.Visible = false;
-        }
-
-        private void button6_Click(object sender, EventArgs e)
-        {
-        }  
 
         private void sosudBox_TextChanged(object sender, EventArgs e)
         {
@@ -97,11 +105,6 @@ namespace elma2
 
         }
 
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            
-        }
-
         private void comboBox1_SelectedValueChanged(object sender, EventArgs e)
         {
             if (comboBox1.Text== "Юрлицо")
@@ -116,6 +119,39 @@ namespace elma2
             }
 
             comboBox2.ValueMember = "id";
+        }
+
+        private void выходToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void новыйToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            sosudBox.Text = MyDb.getNextSosudNo().ToString();
+            labelSosudStatus.Visible = false;
+        }
+
+        private void button4_Click_1(object sender, EventArgs e)
+        {
+            MyDb.addServiceToOrder(id, (Int32)serviceBox.SelectedValue);
+
+            dataGridView1.DataSource = MyDb.getOrderDetail(id);
+        }
+
+        private void saveButton_Click(object sender, EventArgs e)
+        {
+            Order order = new Order()
+            {
+                id = id,
+                description = descriptionBox.Text,
+                status = (String)comboOrderStatusBox.SelectedValue,
+                sosudNo = Convert.ToInt32(sosudBox.Text)
+            };
+
+            MyDb.updateOrder(order, dataGridView1.Rows);
+
+            MessageBox.Show("Заказ сохранен");
         }
     }
 }
